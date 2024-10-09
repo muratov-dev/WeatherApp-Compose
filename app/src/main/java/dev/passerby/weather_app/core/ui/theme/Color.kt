@@ -1,4 +1,4 @@
-package dev.passerby.weather_app.ui.theme
+package dev.passerby.weather_app.core.ui.theme
 
 import androidx.compose.ui.graphics.Color
 

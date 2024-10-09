@@ -1,4 +1,4 @@
-package dev.passerby.weather_app
+package dev.passerby.weather_app.app
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity

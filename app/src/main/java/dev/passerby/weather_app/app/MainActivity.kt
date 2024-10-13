@@ -9,29 +9,21 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
 import dev.passerby.weather_app.core.ui.theme.WeatherAppComposeTheme
-import dev.passerby.weather_app.home.domain.repository.HomeRepository
-import kotlinx.coroutines.launch
-import timber.log.Timber
+import dev.passerby.weather_app.feature.city.domain.model.CityModel
+import dev.passerby.weather_app.feature.city.domain.usecase.GetCitySuggestionListUseCase
 import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
-    @Inject
-    lateinit var homeRepository: HomeRepository
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        lifecycleScope.launch {
-            Timber.tag("HomeRepository")
-                .d("${homeRepository.getRealtimeWeather()?.values?.temperature}")
-        }
         setContent {
             WeatherAppComposeTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->

@@ -23,7 +23,8 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
-        buildConfigField("String", "BASE_URL", "\"https://api.tomorrow.io/v4/weather/\"")
+        buildConfigField("String", "WEATHER_BASE_URL", "\"https://api.tomorrow.io/v4/weather/\"")
+        buildConfigField("String", "CITY_BASE_URL", "\"https://api.api-ninjas.com/v1/\"")
     }
 
     buildTypes {

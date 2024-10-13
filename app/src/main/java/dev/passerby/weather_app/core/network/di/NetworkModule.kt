@@ -15,6 +15,7 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.kotlinx.serialization.asConverterFactory
 import java.util.concurrent.TimeUnit
+import javax.inject.Qualifier
 import javax.inject.Singleton
 
 @Module
@@ -32,12 +33,31 @@ object NetworkModule {
             .writeTimeout(0, TimeUnit.SECONDS).build()
     }
 
+    @CityRetrofitClient
     @Singleton
     @Provides
-    fun provideRetrofitClient(json: Json, okHttpClient: OkHttpClient): Retrofit {
+    fun provideCityRetrofitClient(json: Json, okHttpClient: OkHttpClient): Retrofit {
         val contentType = "application/json".toMediaType()
 
         return Retrofit.Builder().addConverterFactory(json.asConverterFactory(contentType))
-            .baseUrl(BuildConfig.BASE_URL).client(okHttpClient).build()
+            .baseUrl(BuildConfig.CITY_BASE_URL).client(okHttpClient).build()
+    }
+
+    @WeatherRetrofitClient
+    @Singleton
+    @Provides
+    fun provideWeatherRetrofitClient(json: Json, okHttpClient: OkHttpClient): Retrofit {
+        val contentType = "application/json".toMediaType()
+
+        return Retrofit.Builder().addConverterFactory(json.asConverterFactory(contentType))
+            .baseUrl(BuildConfig.WEATHER_BASE_URL).client(okHttpClient).build()
     }
 }
+
+@Qualifier
+@Retention(AnnotationRetention.BINARY)
+annotation class CityRetrofitClient
+
+@Qualifier
+@Retention(AnnotationRetention.BINARY)
+annotation class WeatherRetrofitClient

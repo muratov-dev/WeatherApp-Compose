@@ -1,4 +1,4 @@
-package dev.passerby.weather_app.network.exception
+package dev.passerby.weather_app.core.network.exception
 
 import java.io.IOException
 

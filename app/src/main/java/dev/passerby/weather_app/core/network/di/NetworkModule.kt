@@ -1,4 +1,4 @@
-package dev.passerby.weather_app.network.di
+package dev.passerby.weather_app.core.network.di
 
 import android.content.Context
 import dagger.Module
@@ -7,7 +7,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import dev.passerby.weather_app.BuildConfig
-import dev.passerby.weather_app.network.NetworkConnectionInterceptor
+import dev.passerby.weather_app.core.network.NetworkConnectionInterceptor
 import kotlinx.serialization.json.Json
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient

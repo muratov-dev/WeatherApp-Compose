@@ -1,9 +1,9 @@
-package dev.passerby.weather_app.network
+package dev.passerby.weather_app.core.network
 
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
-import dev.passerby.weather_app.network.exception.NoConnectivityException
+import dev.passerby.weather_app.core.network.exception.NoConnectivityException
 import okhttp3.Interceptor
 import okhttp3.Request
 import okhttp3.Response

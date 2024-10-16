@@ -7,5 +7,6 @@ data class CityModel(
     val country: String,
     val latitude: Double,
     val longitude: Double,
-    val name: String
+    val name: String,
+    var isChecked: Boolean = false
 )

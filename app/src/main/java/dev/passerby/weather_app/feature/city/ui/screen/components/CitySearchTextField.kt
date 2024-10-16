@@ -7,8 +7,11 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -16,19 +19,32 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import dev.passerby.weather_app.R
 import dev.passerby.weather_app.core.ui.theme.AppColors
 import dev.passerby.weather_app.core.ui.theme.cornersShape
+import dev.passerby.weather_app.feature.city.ui.event.CitySuggestionEvent
+import dev.passerby.weather_app.feature.city.ui.state.CitySuggestionUiState
+import kotlinx.coroutines.cancelChildren
+import kotlinx.coroutines.delay
 
 @Composable
-fun CitySearchTextField(modifier: Modifier = Modifier) {
-    val fieldValue = remember { mutableStateOf("") }
+fun CitySearchTextField(
+    state: CitySuggestionUiState,
+    onEvent: (CitySuggestionEvent) -> Unit,
+    modifier: Modifier = Modifier
+) {
+
+    var fieldValue by remember { mutableStateOf("") }
+
     TextField(
-        value = fieldValue.value,
-        onValueChange = { text -> fieldValue.value = text },
+        value = state.name ?: "",
+        onValueChange = { text ->
+            fieldValue = text
+            state.name = fieldValue
+        },
+        maxLines = 1,
         placeholder = {
             Text(
                 text = "City name", style = TextStyle(
@@ -58,10 +74,11 @@ fun CitySearchTextField(modifier: Modifier = Modifier) {
             .height(56.dp)
             .clip(cornersShape)
     )
-}
-
-@Preview
-@Composable
-private fun CitySearchTextFieldPreview() {
-    CitySearchTextField()
+    LaunchedEffect(fieldValue) {
+        state.name = fieldValue
+        if (fieldValue.trim().length < 3) return@LaunchedEffect
+        coroutineContext.cancelChildren()
+        delay(300)
+        onEvent(CitySuggestionEvent.OnCityNameInput(fieldValue.trim()))
+    }
 }

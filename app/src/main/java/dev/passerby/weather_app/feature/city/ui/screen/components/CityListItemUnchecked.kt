@@ -22,11 +22,13 @@ import dev.passerby.weather_app.R
 import dev.passerby.weather_app.core.ui.theme.AppColors
 import dev.passerby.weather_app.core.ui.theme.cornersShape
 import dev.passerby.weather_app.feature.city.domain.model.CityModel
+import java.util.Locale
 
 @Composable
 fun CityListItemUnchecked(
     city: CityModel, onItemClick: (CityModel) -> Unit, modifier: Modifier = Modifier
 ) {
+    val country = Locale("", city.country).displayCountry
     Column(
         modifier = modifier
             .fillMaxWidth()
@@ -43,13 +45,14 @@ fun CityListItemUnchecked(
                     .padding(horizontal = 8.dp)
                     .weight(1f)
                     .align(Alignment.CenterVertically),
-                text = "${city.name}, ${city.country}",
+                text = "${city.name}, $country",
                 style = TextStyle(
                     color = AppColors.Light.textPrimary,
                     fontSize = 20.sp,
                     fontFamily = FontFamily(Font(R.font.outfit_medium)),
                     lineHeight = 24.sp
-                )
+                ),
+                maxLines = 1
             )
         }
         HorizontalDivider(
